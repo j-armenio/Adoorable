@@ -11,11 +11,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private LayerMask jumpableGround;
 
-    private enum MovementState { idle, running, jumping, falling }
+    private enum MovementState { idle, walking, jumping, falling, hitting }
 
-    private float dirX = 0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private int maxJumps = 2;
+    private float dirX = 0f;
+    private int jumps = 0;
+    private bool hit = false;
 
 
     // Start is called before the first frame update
@@ -25,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        jumps = maxJumps;
     }
 
     // Update is called once per frame
@@ -33,10 +37,21 @@ public class PlayerMovement : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (isGrounded())
+        {
+            jumps = maxJumps;
+        }
+
+        if (Input.GetButtonDown("Jump") && jumps > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             audioSource.Play();
+            jumps--;
+        }
+
+        if (Input.GetButtonDown("f"))
+        {
+            hit = true;
         }
 
         UpdateAnimationState();
@@ -48,13 +63,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (dirX > 0f)
         {
-            state = MovementState.running;
-            sprite.flipX = false;
+            state = MovementState.walking;
+            sprite.flipX = true;
         }
         else if (dirX < 0f)
         {
-            state = MovementState.running;
-            sprite.flipX = true;
+            state = MovementState.walking;
+            sprite.flipX = false;
         } else
         {
             state = MovementState.idle;
@@ -68,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
         else if (rb.velocity.y < -.1f)
         {
             state = MovementState.falling;
+        }
+
+        if (hit)
+        {
+            state = MovementState.hitting;
         }
 
         anim.SetInteger("state", (int)state);
