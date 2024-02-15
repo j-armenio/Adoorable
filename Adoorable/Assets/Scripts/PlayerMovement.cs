@@ -63,15 +63,20 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-        if (IsGrounded())
+        if (IsGrounded() && rb.velocity.y < .1f)
         {
             jumps = maxJumps;
         }
 
         if (Input.GetButtonDown("Jump") && jumps > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            // audioSource.Play();
+            if (rb.velocity.y > .1f) {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            } else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+            //audioSource.Play();
             jumps--;
         }
 
@@ -129,6 +134,12 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.hitting;
         }
 
+        // MovementState.hitting == 4
+        if (IsAnimationFinished())
+        {
+            hit = false;
+        }
+
         anim.SetInteger("state", (int)state);
     }
 
@@ -139,7 +150,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        print("Dash");
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
@@ -159,5 +169,10 @@ public class PlayerMovement : MonoBehaviour
     private void CreateDust()
     {
         dust.Play();
+    }
+    
+    private bool IsAnimationFinished()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1;
     }
 }
