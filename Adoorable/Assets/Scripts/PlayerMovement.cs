@@ -59,16 +59,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (dirX != 0)
+        {
             facingRight = dirX;
+            prevDirX = dirX;
+        }                               
 
-        prevDirX = dirX;
         dirX = Input.GetAxisRaw("Horizontal");
-        if (dirX != 0 && prevDirX != dirX && IsGrounded())
+
+        if (IsGrounded() && dirX != 0 && dirX != prevDirX)
         {
             CreateDust();
         }
 
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);            
 
         if (IsGrounded() && rb.velocity.y < .1f)
         {
@@ -116,23 +119,23 @@ public class PlayerMovement : MonoBehaviour
     {
         MovementState state;
 
-        if (dirX > 0f)
+        if (dirX > 0f) // Turn right
         {
             state = MovementState.walking;
             sprite.flipX = true;
             coll.offset = new Vector2(-Math.Abs(coll.offset.x), coll.offset.y);
-            dust.transform.position = new Vector2(-Math.Abs(player.position.x), dust.transform.position.y);
+            dust.transform.position = new Vector2(player.position.x - 1, dust.transform.position.y);
         }
-        else if (dirX < 0f)
+        else if (dirX < 0f) // Turn left
         {
             state = MovementState.walking;
             sprite.flipX = false;
             coll.offset = new Vector2(Math.Abs(coll.offset.x), coll.offset.y);
-            dust.transform.position = new Vector2(Math.Abs(player.position.x), dust.transform.position.y);
+            dust.transform.position = new Vector2(player.position.x + 1, dust.transform.position.y);            
         } else
         {
             state = MovementState.idle;
-        }
+        }        
 
         // Jumping animation comes after because it has more priority
         if (rb.velocity.y > .1f)
