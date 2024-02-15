@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
+    private Transform player;
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private LayerMask jumpableGround;
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float dirX = 0f;
     private float prevDirX = 0f;
     private int jumps = 0;
+    private int dashs = 0;
     private bool hit = false;
     private float facingRight = 0f;
 
@@ -30,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private int maxJumps = 2;
+    [SerializeField] private int maxDashs = 1;
     [SerializeField] private TrailRenderer tr;
     [SerializeField] ParticleSystem dust;
 
@@ -40,7 +44,10 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        player = GetComponent<Transform>();
+
         jumps = maxJumps;
+        dashs = maxDashs;
     }
 
     // Update is called once per frame
@@ -66,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded() && rb.velocity.y < .1f)
         {
             jumps = maxJumps;
+            dashs = maxDashs;
         }
 
         if (Input.GetButtonDown("Jump") && jumps > 0)
@@ -88,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
             hit = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashs > 0 && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -112,11 +120,15 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             sprite.flipX = true;
+            coll.offset = new Vector2(-Math.Abs(coll.offset.x), coll.offset.y);
+            dust.transform.position = new Vector2(-Math.Abs(player.position.x), dust.transform.position.y);
         }
         else if (dirX < 0f)
         {
             state = MovementState.walking;
             sprite.flipX = false;
+            coll.offset = new Vector2(Math.Abs(coll.offset.x), coll.offset.y);
+            dust.transform.position = new Vector2(Math.Abs(player.position.x), dust.transform.position.y);
         } else
         {
             state = MovementState.idle;
@@ -153,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        dashs--;
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;

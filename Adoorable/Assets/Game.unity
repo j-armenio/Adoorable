@@ -1043,6 +1043,7 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 7
   maxJumps: 2
+  maxDashs: 1
   tr: {fileID: 2008303434}
   dust: {fileID: 2047106830}
 --- !u!95 &2008303429
