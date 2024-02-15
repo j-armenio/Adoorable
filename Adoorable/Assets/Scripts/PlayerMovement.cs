@@ -70,6 +70,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && jumps > 0)
         {
+            if (IsGrounded())
+                CreateDust();
+
             if (rb.velocity.y > .1f) {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             } else
