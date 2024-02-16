@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private const float dashingTime = 0.2f;
     private const float dashingCooldown = 0.3f;
 
+    [SerializeField] private float ironNerf = 0.4f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private int maxJumps = 2;
@@ -82,7 +83,9 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded() && dirX != 0 && dirX != prevDirX)
             CreateDust();
 
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        rb.velocity = doorType == DoorState.iron?
+            new Vector2(dirX * moveSpeed * ironNerf, rb.velocity.y):
+            new Vector2(dirX * moveSpeed, rb.velocity.y);
 
         if (IsGrounded() && rb.velocity.y < .1f)
         {
@@ -103,17 +106,21 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
                 CreateDust();
 
-            rb.velocity = 
-                rb.velocity.y > .1f?
-                new Vector2(rb.velocity.x, rb.velocity.y * 0.5f):
-                new Vector2(rb.velocity.x, jumpForce);
+            if (rb.velocity.y < .1f)
+            {
+                rb.velocity = doorType == DoorState.iron?
+                    new Vector2(rb.velocity.x, jumpForce * ironNerf):
+                    new Vector2(rb.velocity.x, jumpForce);
+            }
+            else
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             jumps--;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
             hit = true;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashs > 0 && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && doorType != DoorState.iron && dashs > 0 && canDash)
             StartCoroutine(Dash());
 
         UpdateAnimationState();
@@ -169,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
                 doorType = (doorType == DoorState.wood) ? DoorState.iron : DoorState.wood;
             else
                 doorType = (doorType == DoorState.wood) ? DoorState.glass : DoorState.wood;
+            isIronDoor = false;
         }
 
         if (changeMat)
@@ -190,7 +198,9 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower * facingRight, 0f);
+        rb.velocity = doorType == DoorState.iron?
+            new Vector2(transform.localScale.x * dashingPower * facingRight * ironNerf, 0f):
+            new Vector2(transform.localScale.x * dashingPower * facingRight, 0f);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
 
