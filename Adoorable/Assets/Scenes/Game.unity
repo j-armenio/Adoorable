@@ -1040,6 +1040,7 @@ MonoBehaviour:
   jumpableGround:
     serializedVersion: 2
     m_Bits: 64
+  ironDoor: {fileID: -1819477671, guid: cada54ef7a9a6fd43969b9294e35bf4d, type: 3}
   moveSpeed: 7
   jumpForce: 7
   maxJumps: 2

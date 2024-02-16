@@ -11,12 +11,27 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     private Transform player;
+    private SpriteRenderer spriteRenderer;
+    private Sprite woodenDoor;
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private LayerMask jumpableGround;
+    [SerializeField] private Sprite ironDoor;
 
-    private enum MovementState { idle, walking, jumping, falling, hitting }
+    private enum MovementState
+    { 
+        idle,
+        walking,
+        jumping,
+        falling,
+        hitting,
+        changeMat
+    }
+    private enum DoorState { wood, iron, glass}
+    private DoorState doorType = DoorState.wood;
 
+    private bool changeMat = false;
+    private bool isIronDoor = false;
     private float dirX = 0f;
     private float prevDirX = 0f;
     private int jumps = 0;
@@ -25,10 +40,10 @@ public class PlayerMovement : MonoBehaviour
     private float facingRight = 0f;
 
     private bool canDash = true;
-    private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.3f;
+    private bool isDashing = false;
+    private const float dashingPower = 24f;
+    private const float dashingTime = 0.2f;
+    private const float dashingCooldown = 0.3f;
 
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
@@ -37,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
     [SerializeField] ParticleSystem dust;
 
-    // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,33 +59,30 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         player = GetComponent<Transform>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        woodenDoor = GetComponent<Sprite>();
 
         jumps = maxJumps;
         dashs = maxDashs;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (isDashing)
-        {
             return;
-        }
 
         if (dirX != 0)
         {
             facingRight = dirX;
             prevDirX = dirX;
-        }                               
+        }
 
         dirX = Input.GetAxisRaw("Horizontal");
 
         if (IsGrounded() && dirX != 0 && dirX != prevDirX)
-        {
             CreateDust();
-        }
 
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);            
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
         if (IsGrounded() && rb.velocity.y < .1f)
         {
@@ -79,30 +90,31 @@ public class PlayerMovement : MonoBehaviour
             dashs = maxDashs;
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            spriteRenderer.sprite = doorType == DoorState.iron? ironDoor: woodenDoor;
+
+            changeMat = true;
+            isIronDoor = true;
+        }
+
         if (Input.GetButtonDown("Jump") && jumps > 0)
         {
             if (IsGrounded())
                 CreateDust();
 
-            if (rb.velocity.y > .1f) {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            } else
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            }
-            //audioSource.Play();
+            rb.velocity = 
+                rb.velocity.y > .1f?
+                new Vector2(rb.velocity.x, rb.velocity.y * 0.5f):
+                new Vector2(rb.velocity.x, jumpForce);
             jumps--;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
-        {
             hit = true;
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashs > 0 && canDash)
-        {
             StartCoroutine(Dash());
-        }
 
         UpdateAnimationState();
     }
@@ -118,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAnimationState()
     {
         MovementState state;
+        MovementState prevState = (MovementState)anim.GetInteger("state");
 
         if (dirX > 0f) // Turn right
         {
@@ -133,31 +146,35 @@ public class PlayerMovement : MonoBehaviour
             coll.offset = new Vector2(Math.Abs(coll.offset.x), coll.offset.y);
             dust.transform.position = new Vector2(player.position.x + 1, dust.transform.position.y);            
         } else
-        {
             state = MovementState.idle;
-        }        
 
         // Jumping animation comes after because it has more priority
         if (rb.velocity.y > .1f)
-        {
             state = MovementState.jumping;
-        }
         else if (rb.velocity.y < -.1f)
-        {
             state = MovementState.falling;
-        }
+
+        // Ended hitting animation
+        if (IsAnimationFinished() && hit)
+            hit = false;
 
         if (hit)
-        {
             state = MovementState.hitting;
-        }
 
-        // MovementState.hitting == 4
-        if (IsAnimationFinished())
+        // Ended changing material animation
+        if (changeMat && prevState == MovementState.changeMat && IsAnimationFinished())
         {
-            hit = false;
+            changeMat = false;
+            if (isIronDoor)
+                doorType = (doorType == DoorState.wood) ? DoorState.iron : DoorState.wood;
+            else
+                doorType = (doorType == DoorState.wood) ? DoorState.glass : DoorState.wood;
         }
 
+        if (changeMat)
+            state = MovementState.changeMat;
+
+        anim.SetInteger("doorType", (int)doorType);
         anim.SetInteger("state", (int)state);
     }
 
