@@ -189,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
     {
         dust.Play();
     }
+
+
     
     private bool IsAnimationFinished()
     {
