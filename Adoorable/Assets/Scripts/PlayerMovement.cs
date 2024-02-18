@@ -13,10 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private Transform player;
     private SpriteRenderer spriteRenderer;
     private Sprite woodenDoor;
+    GameObject hammer;
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private Sprite ironDoor;
+    [SerializeField] private TrailRenderer tr;
+    [SerializeField] ParticleSystem dust;
 
     private enum MovementState
     { 
@@ -30,28 +33,25 @@ public class PlayerMovement : MonoBehaviour
     private enum DoorState { wood, iron, glass}
     private DoorState doorType = DoorState.wood;
 
-    private bool changeMat = false;
-    private bool isIronDoor = false;
-    private float dirX = 0f;
-    private float prevDirX = 0f;
-    private int jumps = 0;
-    private int dashs = 0;
-    private bool hit = false;
-    private float facingRight = 0f;
-
-    private bool canDash = true;
-    private bool isDashing = false;
     private const float dashingPower = 24f;
     private const float dashingTime = 0.2f;
     private const float dashingCooldown = 0.3f;
-
-    [SerializeField] private float ironNerf = 0.4f;
-    [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private int maxJumps = 2;
-    [SerializeField] private int maxDashs = 1;
-    [SerializeField] private TrailRenderer tr;
-    [SerializeField] ParticleSystem dust;
+    private const float ironNerf = 0.4f;
+    private const float moveSpeed = 7f;
+    private const float jumpForce = 7f;
+    private const int maxJumps = 2;
+    private const int maxDashs = 1;
+    
+    private float dirX = 0f;
+    private float prevDirX = 0f;
+    private float facingRight = 0f;
+    private int jumps = 0;
+    private int dashs = 0;
+    private bool changeMat = false;
+    private bool isIronDoor = false;
+    private bool hit = false;
+    private bool canDash = true;
+    private bool isDashing = false;
 
     private void Start()
     {
@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Transform>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         woodenDoor = GetComponent<Sprite>();
+        hammer = GameObject.FindGameObjectWithTag("Hammer");
 
         jumps = maxJumps;
         dashs = maxDashs;
@@ -144,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.walking;
             sprite.flipX = true;
             coll.offset = new Vector2(-Math.Abs(coll.offset.x), coll.offset.y);
+            hammer.transform.position = new Vector2(player.position.x + 1.05f, hammer.transform.position.y);
             dust.transform.position = new Vector2(player.position.x - 1, dust.transform.position.y);
         }
         else if (dirX < 0f) // Turn left
@@ -151,7 +153,8 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.walking;
             sprite.flipX = false;
             coll.offset = new Vector2(Math.Abs(coll.offset.x), coll.offset.y);
-            dust.transform.position = new Vector2(player.position.x + 1, dust.transform.position.y);            
+            hammer.transform.position = new Vector2(player.position.x - 1.05f, hammer.transform.position.y);
+            dust.transform.position = new Vector2(player.position.x + 1, dust.transform.position.y);
         } else
             state = MovementState.idle;
 
@@ -184,6 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetInteger("doorType", (int)doorType);
         anim.SetInteger("state", (int)state);
+        anim.SetBool("hit", hit);
     }
 
     private bool IsGrounded()
