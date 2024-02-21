@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f3e12f8dd259630428ef0cedbfaed1d9
+guid: f17400e99e26dc046b1f6e4f3383dc0a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,28 +123,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: door-birth-Sheet_0
+      name: door-intro-2-Sheet_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 90
-        width: 33
-        height: 11
+        x: 24
+        y: 149
+        width: 19
+        height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5b6251a762dc5542bc1bd7ed515d8f8
-      internalID: -1860537601
+      spriteID: 2a2985bfb51ee534a965620bcc511690
+      internalID: 1993735879
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_1
+      name: door-intro-2-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 149
+        width: 30
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 139e68c080227cf478295c898f516666
+      internalID: -123862010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-intro-2-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 149
+        width: 29
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2083cdc9b72766947ac65701da1d6665
+      internalID: -742521361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-intro-2-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 90
+        width: 33
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b8ab49eea8579e4dbc189fd75a5c743
+      internalID: 281617666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-intro-2-Sheet_4
       rect:
         serializedVersion: 2
         x: 147
@@ -152,20 +215,20 @@ TextureImporter:
         width: 27
         height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f271bdce22d8f946b38bdb52acad07a
-      internalID: -1984308477
+      spriteID: 11bd0e70a1fdfd24b963623c84233c93
+      internalID: 1238850248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_2
+      name: door-intro-2-Sheet_5
       rect:
         serializedVersion: 2
         x: 216
@@ -173,20 +236,20 @@ TextureImporter:
         width: 19
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7aa270f6e044e5943b8c0121103decfd
-      internalID: 2032373339
+      spriteID: 04f3d9509c4f32448b68f6240ada3603
+      internalID: -208877495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_3
+      name: door-intro-2-Sheet_6
       rect:
         serializedVersion: 2
         x: 24
@@ -194,20 +257,20 @@ TextureImporter:
         width: 19
         height: 29
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff81b8e33e1c4d747b716a19b5a8daf7
-      internalID: -302123424
+      spriteID: e4d2c68c3b02f764ab54b9034fbd24ac
+      internalID: 970604811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_4
+      name: door-intro-2-Sheet_7
       rect:
         serializedVersion: 2
         x: 88
@@ -215,20 +278,20 @@ TextureImporter:
         width: 19
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d6f359b22016bc4ead3a38af73297b5
-      internalID: -16963085
+      spriteID: 51094d5527cdb304883c14485ee7523e
+      internalID: 1656671782
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_5
+      name: door-intro-2-Sheet_8
       rect:
         serializedVersion: 2
         x: 150
@@ -236,20 +299,20 @@ TextureImporter:
         width: 23
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51cff3e3082e4384f94b778b57abd1f5
-      internalID: -1446184273
+      spriteID: 758f2ef996647684a9b75644474b8830
+      internalID: -1163835788
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_6
+      name: door-intro-2-Sheet_9
       rect:
         serializedVersion: 2
         x: 210
@@ -257,20 +320,20 @@ TextureImporter:
         width: 30
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f52ef3e2872b9c479176e71fe5be920
-      internalID: 1733070986
+      spriteID: ac82c3d140c630446832f6ebb3fae186
+      internalID: 1798407507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_7
+      name: door-intro-2-Sheet_10
       rect:
         serializedVersion: 2
         x: 275
@@ -278,20 +341,20 @@ TextureImporter:
         width: 29
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a508910f9a91157418c2a3d3ba453f39
-      internalID: -1045165491
+      spriteID: 3c2cce3829b6d034085d2b7621ed4461
+      internalID: 1122419759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_8
+      name: door-intro-2-Sheet_11
       rect:
         serializedVersion: 2
         x: 340
@@ -299,35 +362,56 @@ TextureImporter:
         width: 26
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75d26262bb0e08e4bbb68d89f287f7b6
-      internalID: -671591168
+      spriteID: ec8939e23bc43e4429e5ecb556a4f496
+      internalID: 360511762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door-birth-Sheet_9
+      name: door-intro-2-Sheet_12
       rect:
         serializedVersion: 2
-        x: 80
+        x: 81
         y: 90
-        width: 33
-        height: 13
+        width: 30
+        height: 12
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 331aa15324fa2a04fac615da62b982b8
-      internalID: 1690942016
+      spriteID: 2cb5c9b553678a44f9083d22b274d138
+      internalID: 59782975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-intro-2-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 148
+        width: 35
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba4cf084e6ac34244b5060bfa8875ad3
+      internalID: -381572806
       vertices: []
       indices: 
       edges: []
@@ -343,16 +427,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      door-birth-Sheet_0: -1860537601
-      door-birth-Sheet_1: -1984308477
-      door-birth-Sheet_2: 2032373339
-      door-birth-Sheet_3: -302123424
-      door-birth-Sheet_4: -16963085
-      door-birth-Sheet_5: -1446184273
-      door-birth-Sheet_6: 1733070986
-      door-birth-Sheet_7: -1045165491
-      door-birth-Sheet_8: -671591168
-      door-birth-Sheet_9: 1690942016
+      door-intro-2-Sheet_0: 1993735879
+      door-intro-2-Sheet_1: -123862010
+      door-intro-2-Sheet_10: 1122419759
+      door-intro-2-Sheet_11: 360511762
+      door-intro-2-Sheet_12: 691182312
+      door-intro-2-Sheet_13: 59782975
+      door-intro-2-Sheet_2: -742521361
+      door-intro-2-Sheet_3: 281617666
+      door-intro-2-Sheet_4: 1238850248
+      door-intro-2-Sheet_5: -208877495
+      door-intro-2-Sheet_6: 970604811
+      door-intro-2-Sheet_7: 1656671782
+      door-intro-2-Sheet_8: -1163835788
+      door-intro-2-Sheet_9: 1798407507
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
